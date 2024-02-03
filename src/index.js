@@ -1,5 +1,5 @@
-import {initializeApp} from 'firebase/app';
-import {getAuth} from 'firebase/auth'
+import {initializeApp} from 'https://www.gstatic.com/firebasejs/9.15.0/firebase-app.js'
+import {getAuth, createUserWithEmailAndPassword} from 'https://www.gstatic.com/firebasejs/9.15.0/firebase-app.js'
 import {getDatabase} from 'firebase/database'
 
 const appSettings = 'https://kcb-lms-default-rtdb.firebaseio.com/'
@@ -11,8 +11,9 @@ const firebaseConfig = {
   messagingSenderId: "15476877993",
   appId: "1:15476877993:web:1c45be65570b120d48d7b8"
 };
-const app= initializeApp(appSettings)
+const app= initializeApp(firebaseConfig)
 
+// to be used anywhere for authentication
 export const auth= getAuth(app)
 
 const authenticate = firebase.auth()
