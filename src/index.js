@@ -19,18 +19,51 @@ export const auth= getAuth(app)
 const authenticate = firebase.auth()
 const database = firebase.Database()
 
-function signUp(){
+
+userName=document.getElementById("name")
+email=document.getElementById("email")
+passWord=document.getElementById("password")
+UserId=document.getElementById("userIdentification")
+
+let signupBtn = document.getElementById("signupBtn");
+let signinBtn = document.getElementById("signinBtn");
+let nameField = document.getElementById("nameField");
+let title = document.getElementById("title");
+
+signinBtn.onclick = function () {
+nameField.style.maxHeight = "0";
+title.innerHTML = "Sign in";
+signupBtn.classList.add("disabled");
+signinBtn.classList.remove("disabled");
+};
+
+signupBtn.onclick = function () {
+nameField.style.maxHeight = "65px";
+title.innerHTML = "Sign Up";
+signupBtn.classList.remove("disabled");
+signinBtn.classList.add("disabled");
+};
+
+Window.signUp= function(e){
   //get input
-  userName=document.getElementById("name").value;
-  email=document.getElementById("email").value;
-  passWord=document.getElementById("password").value;
-  UserId=document.getElementById("userIdentification").value;
+  e.preventDefault;
+var input={
+  userName: userName.value,
+  email: email.value,
+  passWord: passWord.value,
+  UserId: UserId.value
+}
+createUserWithEmailAndPassword(auth, input.email, input.password)
+.then(function(success){
+  alert('Success')
+})
+.catch(function(err){
+  alert("error" + err.message)
+})
+console.log("input")
 }
 
-
-//create user
-authenticate.createUserWithEmailAndPassword(email,password)
-.then(function(){
+/*.then(function(){
   var user = authenticate.currentUser();
 
   var database_ref = database.ref();
@@ -40,9 +73,25 @@ authenticate.createUserWithEmailAndPassword(email,password)
     email : email,
     password : password
   }
+
+}*/
+
+
+//create user
+/*authenticate.createUserWithEmailAndPassword(email,password)
+.then(function(){
+  var user = authenticate.currentUser();
+
+  var database_ref = database.ref();
+
+  var user_data={
+    userName : userName,
+    email : email,
+    password : password
+  }*/
   //validation
-  function validate_email(email){
-    expression=/^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
+ /* ,function validate_email(email){
+   let expression=/^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
     if(expression.test(email)==true){
       return true;
     }
@@ -51,7 +100,7 @@ authenticate.createUserWithEmailAndPassword(email,password)
     }
   }
   
-  function validate_password(password){
+  ,function validate_password(password){
     if(password.length < 6){
       return false;
     }
@@ -60,28 +109,28 @@ authenticate.createUserWithEmailAndPassword(email,password)
     }
   }
   
-  function validate_name(userName){
+  ,function validate_name(userName){
     if(userName.length < 3){
       return false;
     }
     else{
       return true;
     }
-  }
+  },
   
   //validating fields
-  if(validate_email(email)===false || validate_password(password)===false){
+  if(validate_email(email)===false && validate_password(password)===false){
     alert("Please enter a valid email or password");
-    return
+    return ;
   }
   if(validate_email(email)===false || validate_password(password)===false || validate_name(userName)===false){
     alert("Please enter a valid email, password and name")
-    return 
+    return ;
   }
 
 
   database_ref.child("Users").set(user_data)
-})
+}
 .catch(function(error) {
   // Handle Errors here.
   var errorCode = error.code;
@@ -90,4 +139,4 @@ authenticate.createUserWithEmailAndPassword(email,password)
   alert(errorMessage);
   //...
 });
-
+*/
