@@ -44,9 +44,9 @@ signupBtn.classList.remove("disabled");
 signinBtn.classList.add("disabled");
 };
 
-Window.signUp= function signUp(){
+Window.signUp= function(e){
   //get input
-  signUp.preventDefault;
+  e.preventDefault;
 var input={
   userName: userName.value,
   email: email.value,
@@ -57,8 +57,8 @@ createUserWithEmailAndPassword(auth, input.email, input.password)
 .then(function(success){
   alert('Success')
 })
-.catch(function(error){
-  alert(error.message)
+.catch(function(err){
+  alert("error" + err.message)
 })
 console.log("input")
 }
