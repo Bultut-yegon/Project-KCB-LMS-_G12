@@ -1,6 +1,6 @@
 import {initializeApp} from 'https://www.gstatic.com/firebasejs/9.15.0/firebase-app.js'
 import {getAuth, createUserWithEmailAndPassword} from 'https://www.gstatic.com/firebasejs/9.15.0/firebase-app.js'
-import {getDatabase} from 'firebase/database'
+import {getDatabase} from 'https://www.gstatic.com/firebasejs/9.15.0/firebase-database.js'
 
 const appSettings = 'https://kcb-lms-default-rtdb.firebaseio.com/'
 const firebaseConfig = {
@@ -21,9 +21,10 @@ const database = firebase.Database()
 
 function signUp(){
   //get input
-  userName=document.getElementById("nameField").value;
+  userName=document.getElementById("name").value;
   email=document.getElementById("email").value;
-  password=document.getElementById("password").value;
+  passWord=document.getElementById("password").value;
+  UserId=document.getElementById("userIdentification").value;
 }
 
 
@@ -39,6 +40,45 @@ authenticate.createUserWithEmailAndPassword(email,password)
     email : email,
     password : password
   }
+  //validation
+  function validate_email(email){
+    expression=/^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
+    if(expression.test(email)==true){
+      return true;
+    }
+    else{
+      return false;
+    }
+  }
+  
+  function validate_password(password){
+    if(password.length < 6){
+      return false;
+    }
+    else{
+      return true;
+    }
+  }
+  
+  function validate_name(userName){
+    if(userName.length < 3){
+      return false;
+    }
+    else{
+      return true;
+    }
+  }
+  
+  //validating fields
+  if(validate_email(email)===false || validate_password(password)===false){
+    alert("Please enter a valid email or password");
+    return
+  }
+  if(validate_email(email)===false || validate_password(password)===false || validate_name(userName)===false){
+    alert("Please enter a valid email, password and name")
+    return 
+  }
+
 
   database_ref.child("Users").set(user_data)
 })
@@ -51,40 +91,3 @@ authenticate.createUserWithEmailAndPassword(email,password)
   //...
 });
 
-//validation
-function validate_email(email){
-  expression=/^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
-  if(expression.test(email)==true){
-    return true;
-  }
-  else{
-    return false;
-  }
-}
-
-function validate_password(password){
-  if(password.length < 6){
-    return false;
-  }
-  else{
-    return true;
-  }
-}
-
-function validate_name(userName){
-  if(userName.length < 3){
-    return false;
-  }
-  else{
-    return true;
-  }
-}
-
-//validating fields
-if(validate_email(email)==false || validate_password(password)==false){
-  alert("Please enter a valid email or password");
-}
-if(validate_email(email)==false || validate_password(password)==false || validate_name(userName)==false){
-  alert("Please enter a valid email, password and name")
-  //return false;
-}
